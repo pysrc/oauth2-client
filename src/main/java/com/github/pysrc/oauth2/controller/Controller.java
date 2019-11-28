@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 
 
 @RestController
@@ -22,10 +23,10 @@ public class Controller {
     Integer port;
 
 
-    @GetMapping("/recv")
-    String[] recv(String code) {
+    @GetMapping("/home")
+    String[] home(String code) {
         RestTemplate template = new RestTemplate();
-        String url = tokenUrl+"?client_id=" + clientId + "&grant_type=authorization_code&grant_type=authorization_code&client_secret=" + secret + "&code=" + code;
+        String url = tokenUrl+"?client_id=" + clientId + "&grant_type=authorization_code&client_secret=" + secret + "&code=" + code;
         OAuthDto dto = template.postForObject(url, null, OAuthDto.class);
         String baseUrl = "http://127.0.0.1:"+port.toString()+"%s?access_token="+dto.getAccess_token();
         String[] urls = new String[]{
